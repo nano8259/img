@@ -8,6 +8,7 @@ def process():
     img1_l = cv2.Laplacian(origin_img1, cv2.CV_8U)
     img1_sx = cv2.Sobel(origin_img1, cv2.CV_8U, 0, 1)
     img1_sy = cv2.Sobel(origin_img1, cv2.CV_8U, 1, 0)
+    edges = cv2.Canny(origin_img2, 0, 100)  # canny边缘检测
 
     sobelX = np.uint8(np.absolute(img1_sx))  # x方向梯度的绝对值
     sobelY = np.uint8(np.absolute(img1_sy))  # y方向梯度的绝对值
@@ -23,6 +24,7 @@ def process():
     cv2.imwrite(r'.\res\6_edge_Sobel.bmp', sobelCombined)
     cv2.imwrite(r'.\res\6_edge_Sobel_threshold.bmp', res)
     cv2.imwrite(r'.\res\6_edge_Sobel_threshold_noabs.bmp', res_)
+    cv2.imwrite(r'.\res\6_edge_Sobel_threshold_canny.bmp', edges)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
