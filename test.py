@@ -13,7 +13,8 @@ def process():
     cv2.imshow('img1', img1)
     cv2.imshow('img2', img2)
     cv2.imshow('res', res)
-    cv2.imwrite(r'.\res\test1.bmp', res)
+    cv2.imwrite(r'.\res\1_test.bmp', res)
+    cv2.imwrite(r'.\res\1_sub.bmp', sub_img)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
