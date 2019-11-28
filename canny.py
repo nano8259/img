@@ -3,6 +3,8 @@ import numpy as np
 
 def CannyThreshold(lowThreshold):
     detected_edges = cv2.GaussianBlur(gray,(15,15),0)
+    detected_edges = cv2.GaussianBlur(detected_edges,(15,15),0)
+    detected_edges = cv2.equalizeHist(detected_edges)
     detected_edges = cv2.Canny(detected_edges,lowThreshold,lowThreshold*ratio,apertureSize = kernel_size)
     dst = cv2.bitwise_and(gray,gray,mask = detected_edges)  # just add some colours to edges from original image.
     cv2.imshow('canny demo',dst)
@@ -14,8 +16,8 @@ kernel_size = 3
 
 img = cv2.imread(r'.\imgs\0510.bmp')
 gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-gray = gray[50:1100, 480:1630]
-
+gray = gray[50:1100, 480:1650]
+gray = cv2.resize(gray, (0, 0), fx=0.466, fy=0.5)
 
 cv2.namedWindow('canny demo')
 
