@@ -10,9 +10,9 @@ def CannyThreshold(lowThreshold):
     cv2.imshow('canny demo',dst)
 
 lowThreshold = 0
-max_lowThreshold = 100
-ratio = 2
-kernel_size = 3
+max_lowThreshold = 400
+ratio = 3
+kernel_size = 5
 
 img = cv2.imread(r'.\imgs\0510.bmp')
 gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
