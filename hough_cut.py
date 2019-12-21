@@ -50,6 +50,6 @@ def process(filename):
 
 if __name__ == "__main__":
     # 依次读取根目录下的每一个文件
-    # for file in os.listdir(root_dir):
-    #     process(file)
-    process('0524.bmp')
+    for file in os.listdir(root_dir):
+        process(file)
+    # process('0524.bmp')

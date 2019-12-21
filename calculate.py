@@ -140,6 +140,18 @@ def add_circle():
     datas.append([[0, 0], pts])
 
 
+def add_poly():
+    for p_num in range(3,11):
+        delta_theta = 2 * np.math.pi / p_num
+        pts = []
+        for i in range(p_num):
+            theta = i * delta_theta
+            x = 1 * np.math.cos(theta)
+            y = 1 * np.math.sin(theta)
+            pts.append([x, y])
+        datas.append([[0, 0], pts])
+
+
 def calculate_1():
     perimeters = []  # 周长
     areas = []  # 面积
@@ -158,6 +170,21 @@ def calculate_1():
 
         res.append(perimeters)
         res.append(areas)
+
+
+def calculate_va():
+    vs = []
+    for i in range(len(datas)-1):
+        x1, y1 = datas[i][0]
+        x2, y2 = datas[i+1][0]
+        v = np.math.sqrt((x2-x1)**2 + (y2-y1)**2)
+        vs.append(v)
+    for i in range(len(vs)-1):
+        v1 = vs[i]
+        v2 = vs[i+1]
+        a = v2 - v1
+        print(str(vs[i]) + '\t' + str(a))
+    print(vs[-1])
 
 
 def draw():
@@ -194,7 +221,7 @@ def read_file():
 
 def calculate_r():
     rjs = []
-    for j in range(100):
+    for j in range(0, 50):
         r_5s = []
         for ploy in datas:
             r_5_sum = 0
@@ -206,7 +233,7 @@ def calculate_r():
                 x2 -= c_x
                 y1 -= c_y
                 y2 -= c_y
-                if abs(x1 - x2) < 0.001:
+                if abs(x1 - x2) < 0.01:
                     temp = x1
                     x1 = y1
                     y1 = temp
@@ -248,14 +275,17 @@ if __name__ == '__main__':
     # datas.append([[1, 1],[[0,0],[2,0],[2,2],[0,2]]])
     # datas.append([[0, 0], [[-1, -1], [1, -1], [1, 1], [-1, 1]]])
     res = []  # 6*n，周长、面积、四个广义半径
-    # read_file()
-    add_circle()
+    read_file()
+    # add_circle()
+    # add_poly()
     # calculate_1()  # 周长面积
 
     # calculate_2()  # 迭代法（不用了
     # calculate_3()  # 精确求广义半径
     # calculate_4()  # 迭代法
     # calculate_5()  # 精确求n=5
-    calculate_r()
+    # calculate_r()
+    calculate_va()
+
 
     # draw()

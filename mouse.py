@@ -1,9 +1,7 @@
 import cv2
 import numpy as np
 # 当鼠标按下时变为True
-drawing = False
 mode = True
-ix, iy = -1, -1  # 起始坐标
 color = (0, 0, 255)
 lower = np.array([0, 253, 253])
 upper = np.array([3, 255, 255])
@@ -13,31 +11,23 @@ point = None
 
 # 回调函数
 def draw_circle(event, x, y, flags, param):
-    global ix, iy, drawing, mode, hull, point
+    global mode, hull, point
 
     # 按下鼠标左键时返回起始位置坐标
     if event == cv2.EVENT_LBUTTONDOWN:
         if mode:
             cv2.floodFill(img, None, (x, y), color, (scale, scale, scale), (scale, scale, scale), 4)
-        else :
+        else:
             cv2.circle(img, (x, y), 4, (255,255,255), -1)
     # 当鼠标左键按下并移动时绘制图形。event可以查看移动，flag查看是否按下
     elif event == cv2.EVENT_MOUSEMOVE and flags == cv2.EVENT_FLAG_LBUTTON:
         if mode:
             cv2.floodFill(img, None, (x, y), color, (scale, scale, scale), (scale, scale, scale), 4)
-        else :
-            cv2.circle(img, (x, y), 4, (255,255,255), -1)
-
-    # 当鼠标松开停止绘画。
+        else:
+            cv2.circle(img, (x, y), 4, (255, 255, 255), -1)
+    # 右键按下时进行凸包运算。
     elif event == cv2.EVENT_RBUTTONDOWN:
         bag()
-
-    # 使用鼠标右键更换颜色
-    elif event == cv2.EVENT_LBUTTONUP:
-        pass
-        # hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-        # mask = cv2.inRange(hsv, lower, upper)
-        # cv2.imshow('msk', mask)
 
 
 def showSetting(img):
@@ -60,6 +50,7 @@ def write(fileno):
 
     cv2.imwrite(".\\data_2\\" + fileno + ".bmp", this_img)
 
+
 def bag():
     print('yes')
     global hull, point
@@ -67,7 +58,6 @@ def bag():
     mask = cv2.inRange(hsv, lower, upper)
     # cv2.imshow('msk', mask)
     contours, hierarchy = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_TC89_KCOS)
-    cnt = contours[0]
     # 寻找凸包并绘制凸包（轮廓）
     for cnt in contours:
         hull = cv2.convexHull(cnt)
@@ -84,7 +74,6 @@ def bag():
             cv2.circle(img, (cX, cY), 2, (0, 255, 255), -1)
 
 
-
 if __name__ == "__main__":
     fileno = '0575'
     scale = 1
@@ -98,7 +87,7 @@ if __name__ == "__main__":
     linetype=cv2.LINE_AA
     showSetting(img)
     cv2.setMouseCallback('image', draw_circle)
-    while (1):
+    while 1:
         cv2.imshow('image', img)
         k = cv2.waitKey(1) & 0xFF
         if k == ord('w'):
